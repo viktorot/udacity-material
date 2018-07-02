@@ -161,8 +161,7 @@ public class ArticleDetailFragment extends Fragment implements
                         + " by "
                         + cursor.getString(ArticleLoader.Query.AUTHOR)).toString();
 
-        final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString()
-                .substring(0, 1500);
+        final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
 
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
