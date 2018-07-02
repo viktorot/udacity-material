@@ -15,6 +15,9 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
@@ -27,10 +30,10 @@ public class ArticleDetailActivity extends AppCompatActivity
     private long mStartId;
 
     private long mSelectedItemId;
-    private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
-    private int mTopInset;
 
-    private ViewPager mPager;
+    @BindView(R.id.pager)
+    ViewPager mPager;
+
     private MyPagerAdapter mPagerAdapter;
 
     @Override
@@ -38,13 +41,10 @@ public class ArticleDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(mPagerAdapter);
+        ButterKnife.bind(this);
 
-//        mPager.setPageMargin((int) TypedValue
-//                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
-//        mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
+        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
 
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -112,17 +112,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     private class MyPagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-            ArticleDetailFragment fragment = (ArticleDetailFragment) object;
-            if (fragment != null) {
-                // TODO
-                //mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
-                //updateUpButtonPosition();
-            }
         }
 
         @Override
