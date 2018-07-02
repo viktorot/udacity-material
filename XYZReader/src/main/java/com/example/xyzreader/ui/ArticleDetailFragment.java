@@ -45,9 +45,6 @@ public class ArticleDetailFragment extends Fragment implements
     @BindView(R.id.photo)
     ImageView mPhotoView;
 
-    @BindView(R.id.meta_bar)
-    LinearLayout metaBar;
-
     @BindView(R.id.article_title)
     TextView mTitleView;
 
