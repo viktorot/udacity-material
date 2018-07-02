@@ -1,9 +1,7 @@
 package com.example.xyzreader.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -124,7 +122,7 @@ public class ArticleDetailFragment extends Fragment implements
         unbinder = ButterKnife.bind(this, view);
 
         if (mToolbar != null) {
-            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_vector_black);
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_vector_white);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

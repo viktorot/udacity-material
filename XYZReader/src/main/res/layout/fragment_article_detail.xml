@@ -17,9 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
             app:expandedTitleMargin="20dp"
             app:expandedTitleMarginBottom="20dp"
-            app:layout_scrollFlags="enterAlways|scroll"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <FrameLayout
@@ -31,10 +32,10 @@
                     android:id="@+id/photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/photo_background_protection"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription"
-                    android:background="@drawable/photo_background_protection"/>
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:id="@+id/meta_bar"
@@ -86,6 +87,7 @@
         android:id="@+id/movie_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/dkgray"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -101,7 +103,7 @@
                 android:layout_margin="20dp"
                 android:autoLink="web"
                 android:linksClickable="true"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 
@@ -114,6 +116,8 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_share"
         app:elevation="8dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />

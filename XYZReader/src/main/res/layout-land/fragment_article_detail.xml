@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -125,8 +126,9 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        app:elevation="8dp"
+        android:src="@drawable/ic_share"
         app:backgroundTint="@color/colorPrimaryDark"
+        app:elevation="8dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />
 
