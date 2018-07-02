@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -17,9 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:expandedTitleMargin="20dp"
-            app:expandedTitleMarginBottom="20dp"
-            app:layout_scrollFlags="scroll"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <ImageView
@@ -50,8 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:fitsSystemWindows="true"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -65,11 +65,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                app:cardBackgroundColor="@color/dkgray">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -79,8 +81,6 @@
                         android:layout_gravity="bottom"
                         android:orientation="vertical"
                         android:paddingBottom="10dp"
-                        android:paddingEnd="5dp"
-                        android:paddingStart="5dp"
                         android:paddingTop="10dp">
 
                         <TextView
@@ -89,7 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="2"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/white"
                             android:textStyle="bold" />
 
                         <TextView
@@ -97,7 +97,7 @@
                             style="?android:attr/textAppearanceSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/ltgray" />
 
                     </LinearLayout>
 
@@ -106,10 +106,9 @@
                         style="?android:attr/textAppearanceMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
                         android:autoLink="web"
                         android:linksClickable="true"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/white" />
 
                 </LinearLayout>
 
@@ -127,6 +126,7 @@
         android:clickable="true"
         android:focusable="true"
         app:elevation="8dp"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />
 

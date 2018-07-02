@@ -21,6 +21,8 @@ import com.example.xyzreader.data.ItemsContract;
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String ARG_SELECTED_ID = "selected_id";
+
     private Cursor mCursor;
     private long mStartId;
 
@@ -63,9 +65,18 @@ public class ArticleDetailActivity extends AppCompatActivity
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
                 mSelectedItemId = mStartId;
             }
+        } else {
+            mStartId = savedInstanceState.getLong(ARG_SELECTED_ID);
+            mSelectedItemId = mStartId;
         }
 
         getSupportLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(ARG_SELECTED_ID, mSelectedItemId);
     }
 
     @NonNull

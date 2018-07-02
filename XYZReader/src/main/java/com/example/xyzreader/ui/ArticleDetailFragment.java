@@ -94,8 +94,14 @@ public class ArticleDetailFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
+        if (args == null) {
+            args = savedInstanceState;
+        }
+
         if (args != null && args.containsKey(ARG_ITEM_ID)) {
-            mItemId = getArguments().getLong(ARG_ITEM_ID);
+            mItemId = args.getLong(ARG_ITEM_ID);
+        } else {
+            throw new IllegalArgumentException("itemId is not set");
         }
 
         setHasOptionsMenu(true);
@@ -133,6 +139,12 @@ public class ArticleDetailFragment extends Fragment implements
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(ARG_ITEM_ID, mItemId);
+    }
+
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
@@ -155,7 +167,7 @@ public class ArticleDetailFragment extends Fragment implements
                         + cursor.getString(ArticleLoader.Query.AUTHOR)).toString();
 
         final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString()
-                .substring(0, 500);
+                .substring(0, 1500);
 
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
