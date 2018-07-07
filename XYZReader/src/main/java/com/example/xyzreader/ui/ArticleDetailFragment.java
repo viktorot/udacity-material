@@ -168,7 +168,7 @@ public class ArticleDetailFragment extends Fragment implements
 
         final String author = Html.fromHtml(authorText).toString();
 
-        final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString().substring(0, 500);
+        final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
 
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
@@ -180,8 +180,11 @@ public class ArticleDetailFragment extends Fragment implements
         mAuthorView.setText(author);
         mBodyView.setText(body);
 
-        Picasso.get()
+        Picasso
+                .get()
                 .load(photo)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .into(mPhotoView);
 
 

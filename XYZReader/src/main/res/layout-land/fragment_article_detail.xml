@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -81,8 +81,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:orientation="vertical"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp">
+                        android:paddingBottom="@dimen/author_padding_top_bottom"
+                        android:paddingEnd="@dimen/author_padding_start_end"
+                        android:paddingStart="@dimen/author_padding_start_end"
+                        android:paddingTop="@dimen/author_padding_top_bottom">
 
                         <TextView
                             android:id="@+id/article_title"

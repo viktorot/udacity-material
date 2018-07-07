@@ -8,7 +8,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/app_bar_height"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -17,8 +17,8 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
-            app:expandedTitleMargin="20dp"
-            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMargin="@dimen/collapsable_title_margin"
+            app:expandedTitleMarginBottom="@dimen/collapsable_title_margin"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -43,10 +43,10 @@
                     android:layout_gravity="bottom"
                     android:elevation="4dp"
                     android:orientation="vertical"
-                    android:paddingBottom="10dp"
-                    android:paddingEnd="5dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="10dp">
+                    android:paddingBottom="@dimen/author_padding_top_bottom"
+                    android:paddingEnd="@dimen/author_padding_start_end"
+                    android:paddingStart="@dimen/author_padding_start_end"
+                    android:paddingTop="@dimen/author_padding_top_bottom">
 
                     <TextView
                         android:id="@+id/article_title"
