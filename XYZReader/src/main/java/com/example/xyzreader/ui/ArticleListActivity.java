@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -20,12 +21,14 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,7 +62,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     // Use default locale format
     private final SimpleDateFormat outputFormat = new SimpleDateFormat();
     // Most time functions can only handle 1902 - 2037
-    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
+    private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +149,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
 
-        public Adapter(Cursor cursor) {
+        Adapter(Cursor cursor) {
             mCursor = cursor;
         }
 
@@ -156,6 +159,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             return mCursor.getLong(ArticleLoader.Query._ID);
         }
 
+        @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = getLayoutInflater().inflate(R.layout.list_item_article, parent, false);
@@ -176,7 +180,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                 return dateFormat.parse(date);
             } catch (ParseException ex) {
                 Log.e(TAG, ex.getMessage());
-                Log.i(TAG, "passing today's date");
                 return new Date();
             }
         }
@@ -184,27 +187,41 @@ public class ArticleListActivity extends AppCompatActivity implements
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
+
             holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
+                CharSequence date = DateUtils.getRelativeTimeSpanString(
+                        publishedDate.getTime(),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL);
 
-                holder.subtitleView.setText(Html.fromHtml(
-                        DateUtils.getRelativeTimeSpanString(
-                                publishedDate.getTime(),
-                                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                                DateUtils.FORMAT_ABBREV_ALL).toString()
-                                + "<br/>" + " by "
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)));
+                String subtitle = new StringBuilder()
+                        .append(date)
+                        .append("<br/> ")
+                        .append(getResources().getString(R.string.by))
+                        .append(" ")
+                        .append(mCursor.getString(ArticleLoader.Query.AUTHOR))
+                        .toString();
+
+                holder.subtitleView.setText(Html.fromHtml(subtitle));
             } else {
-                holder.subtitleView.setText(Html.fromHtml(
-                        outputFormat.format(publishedDate)
-                        + "<br/>" + " by "
-                        + mCursor.getString(ArticleLoader.Query.AUTHOR)));
+                String subtitle = new StringBuilder()
+                        .append(outputFormat.format(publishedDate))
+                        .append("<br/> ")
+                        .append(getResources().getString(R.string.by))
+                        .append(" ")
+                        .append(mCursor.getString(ArticleLoader.Query.AUTHOR))
+                        .toString();
+
+                holder.subtitleView.setText(Html.fromHtml(subtitle));
             }
-            holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
-            holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+
+            Picasso
+                    .get()
+                    .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
+                    .into(holder.thumbnailView);
         }
 
         @Override
@@ -213,16 +230,16 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public DynamicHeightNetworkImageView thumbnailView;
+    private static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView thumbnailView;
         public TextView titleView;
         public TextView subtitleView;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
-            thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
-            titleView = (TextView) view.findViewById(R.id.article_title);
-            subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
+            thumbnailView = view.findViewById(R.id.thumbnail);
+            titleView = view.findViewById(R.id.article_title);
+            subtitleView = view.findViewById(R.id.article_subtitle);
         }
     }
 }

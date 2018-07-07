@@ -153,15 +153,22 @@ public class ArticleDetailFragment extends Fragment implements
         }
 
         final String title = cursor.getString(ArticleLoader.Query.TITLE);
-        final String author = Html.fromHtml(
-                DateUtils.getRelativeTimeSpanString(
-                        cursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL).toString()
-                        + " by "
-                        + cursor.getString(ArticleLoader.Query.AUTHOR)).toString();
+        final CharSequence date = DateUtils.getRelativeTimeSpanString(
+                cursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                DateUtils.FORMAT_ABBREV_ALL);
 
-        final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString();
+        final String authorText = new StringBuilder()
+                .append(date)
+                .append(" ")
+                .append(getString(R.string.by))
+                .append(" ")
+                .append(cursor.getString(ArticleLoader.Query.AUTHOR))
+                .toString();
+
+        final String author = Html.fromHtml(authorText).toString();
+
+        final String body = Html.fromHtml(cursor.getString(ArticleLoader.Query.BODY)).toString().substring(0, 500);
 
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
